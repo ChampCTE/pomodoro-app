@@ -1,0 +1,256 @@
+/* CSS for Pomodoro Timer Application */
+/* Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --green: #2e7d32;
+  --light-green: #e8f5e9;
+  --red: #c62828;
+  --white: #ffffff;
+}
+
+/* General background */
+body {
+  min-height: 100vh;
+  background: var(--light-green);
+  color: var(--green);
+  display: block;
+  padding: 1rem 0;
+}
+
+/* Main title */
+h1 {
+  color: var(--green);
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Sections */
+section {
+  background-color: #e8f5e9;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  margin: 0.5rem auto;
+  box-shadow: 0 10px 25px rgba(3, 80, 0, 0.2);
+}
+
+/* Secondary titles */
+h2 {
+  margin-bottom: 1rem;
+  font-weight: normal;
+}
+
+/* Cycle list */
+#cycle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+/* Buttons */
+button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--white);
+  color: var(--green);
+  border: 2px solid var(--green);
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--green);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+/* Timer */
+#time {
+  font-size: 4rem;
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+/* Progress */
+#progress {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: var(--green);
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* Hide elements */
+.hidden {
+  display: none;
+}
+
+/* Clock and main timer */
+#clock {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+/* Timer classic clock style */
+#time {
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 4px solid var(--green);
+  border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+}
+
+/* Controls below timer */
+.controls {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Selector container (under the timer) */
+#selector-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Buttons inside selector */
+#cycle-list button {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#cycle-list button:hover {
+  transform: scale(1.02);
+}
+
+/* Volume button under timer */
+.volume-btn {
+  width: 48px;
+  height: 48px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: var(--green);
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.volume-btn:hover {
+  background-color: var(--red);
+  transform: scale(1.05);
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 1.5rem;
+  color: rgba(0,0,0,0.6);
+  font-size: 0.9rem;
+}
+
+/* Phase image styling */
+.phase-image {
+  max-height: 250px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+/* Facts card*/
+#facts-container .card {
+  background-color: #ffecec;
+  border: 1px solid rgba(198, 47, 47, 0.12);
+  color: #7a1f1f;
+}
+
+#facts-container .card-body {
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* Controls buttons: make play/pause/volume consistent size and style */
+.controls .btn {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  line-height: 1;
+  margin: 0;
+  vertical-align: middle;
+}
+
+/* Play (green) and Pause (red) styles */
+.btn-play {
+  background-color: var(--green) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--green) !important;
+}
+.btn-play:hover {
+  background-color: #236628 !important;
+  border-color: #236628 !important;
+}
+
+.btn-pause {
+  background-color: var(--red) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--red) !important;
+}
+.btn-pause:hover {
+  background-color: #9b2424 !important;
+  border-color: #9b2424 !important;
+}
+
+/* Ensure volume button matches dimensions of play/pause */
+.volume-btn {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure the timer fits nicely inside its column on small screens */
+@media (max-width: 767px) {
+  section {
+    padding: 1.2rem;
+  }
+  #time {
+    width: 180px;
+    height: 180px;
+    font-size: 3.2rem;
+  }
+}

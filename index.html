@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pomodoro App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container py-5 text-center">
+    <h1 class="mb-4">Pomodoro Timer</h1>
+    <p><i class="bi bi-clock-history">The Pomodoro Technique is a time management method that breaks work into intervals separated by short breaks.</i></p>
+
+    <div class="row align-items-center">
+      <!-- LEFT: IMAGE -->
+      <div class="col-md-3 text-center">
+        <img
+          id="phase-image"
+          src="assets/ready.svg"
+          alt="Phase illustration"
+          class="img-fluid phase-image"
+        />
+      </div>
+
+      <!-- CLOCK -->
+      <div class="col-md-6">
+        <section id="clock">
+      <h2 id="phase">Ready</h2>
+      <div id="time">25:00</div>
+
+      <p id="progress">Select a cycle to start...</p>
+
+      <div class="controls d-flex justify-content-center gap-2 align-items-center">
+        <button id="play-btn" disabled class="btn btn-play" aria-label="Start" title="Start">
+          <i class="bi bi-play-fill"></i>
+        </button>
+        <button id="pause-btn" disabled class="btn btn-pause" aria-label="Pause">
+          <i class="bi bi-pause-fill"></i>
+        </button>
+        <button id="sound-btn" class="volume-btn btn btn-outline-secondary" aria-label="Toggle sound">
+          <i class="bi bi-volume-up"></i>
+        </button>
+      </div>
+
+      <!-- CYCLE SELECTION BUTTONS -->
+      <div id="selector-container" class="mt-4">
+        <div id="cycle-list" class="d-flex flex-column align-items-center"></div>
+      </div>
+        </section>
+      </div>
+
+      <!-- RIGHT: FACTS -->
+      <div class="col-md-3">
+        <div id="facts-container" class="d-none"></div>
+      </div>
+    </div>
+
+  <!-- Completion Modal -->
+  <div class="modal fade" id="doneModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🎉Timer Finished🎉</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Pomodoro is complete! Now you can take a break or start a new session.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Modal -->
+  <div class="modal fade" id="statsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Statistics</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <canvas id="statsCanvas" width="320" height="320"></canvas>
+          <div id="stats-readouts" class="mt-3 text-start">
+            <p id="stat-focus">Total focus time: 0h 0m</p>
+            <p id="stat-breaks">Total breaks taken: 0</p>
+            <p id="stat-sessions">Sessions completed vs abandoned: 0 vs 0</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer text-center">
+  (c) 2026 Cèlia Trullà Estruch
+  | Music by different creators on <a href="https://pixabay.com/" target="_blank">Pixabay</a>
+  | Visual inspiration from <a href="https://www.tomatotimers.com" target="_blank">TomatoTimers</a>.
+  </footer>
+</div>
+
+<script src="js/cycles.js"></script>
+<script src="js/facts.js"></script>
+<script src="js/pomodoro.js"></script>
+<script src="js/ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
