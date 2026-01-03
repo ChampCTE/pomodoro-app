@@ -60,19 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
       cycleList.appendChild(button);
     });
 
-    // Append a 'Stats' button after the cycles list
-    const statsButton = document.createElement('button');
-    statsButton.className = 'btn btn-outline-primary mt-2';
-    statsButton.setAttribute('aria-label', 'Stats');
-    statsButton.setAttribute('title', 'Stats');
-    statsButton.innerHTML = '<i class="bi bi-pie-chart-fill"></i>';
-    statsButton.addEventListener('click', () => {
+    // Stats modal opener — extract into a function so we can reuse for
+    // an existing #stats-btn in markup or the created button.
+    function openStatsModal() {
       try {
-        // load stats from localStorage
         const raw = localStorage.getItem('pomodoroStats');
         const s = raw ? JSON.parse(raw) : { totalFocusSeconds:0, breaksTaken:0, sessionsCompleted:0, sessionsAbandoned:0 };
 
-        // update
         const fmt = (secs) => {
           const h = Math.floor(secs / 3600);
           const m = Math.floor((secs % 3600) / 60);
@@ -86,11 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (breaksEl) breaksEl.textContent = `Total breaks taken: ${s.breaksTaken || 0}`;
         if (sessionsEl) sessionsEl.textContent = `Sessions completed vs abandoned: ${s.sessionsCompleted || 0} vs ${s.sessionsAbandoned || 0}`;
 
-        // Draw pie chart
         const canvas = document.getElementById('statsCanvas');
         if (canvas && canvas.getContext) {
           const ctx = canvas.getContext('2d');
-          // clear
           ctx.clearRect(0,0,canvas.width, canvas.height);
           const completed = s.sessionsCompleted || 0;
           const abandoned = s.sessionsAbandoned || 0;
@@ -100,14 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
           const radius = Math.min(cx, cy) - 10;
 
           if (total === 0) {
-            // draw neutral circle
             ctx.fillStyle = '#e9ecef';
             ctx.beginPath();
             ctx.arc(cx, cy, radius, 0, Math.PI * 2);
             ctx.fill();
           } else {
             let start = -Math.PI / 2;
-            // completed slice (green)
             const compAngle = (completed / total) * Math.PI * 2;
             ctx.beginPath();
             ctx.moveTo(cx, cy);
@@ -116,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.closePath();
             ctx.fill();
             start += compAngle;
-            // abandoned slice (red)
             const abAngle = (abandoned / total) * Math.PI * 2;
             ctx.beginPath();
             ctx.moveTo(cx, cy);
@@ -127,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
-        // show modal
         const modalEl = document.getElementById('statsModal');
         if (modalEl && typeof bootstrap !== 'undefined') {
           const modal = new bootstrap.Modal(modalEl);
@@ -136,16 +124,39 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (err) {
         console.error('Failed to open stats modal', err);
       }
-    });
+    }
 
-    // button inline with the controls (play/pause/volume)
+    // Create the button element (used if there isn't already a #stats-btn in markup)
+    const statsButton = document.createElement('button');
+    statsButton.className = 'btn btn-stats mt-2';
+    statsButton.setAttribute('aria-label', 'Stats');
+    statsButton.setAttribute('title', 'Stats');
+    statsButton.innerHTML = '<i class="bi bi-pie-chart-fill"></i>';
+    statsButton.addEventListener('click', openStatsModal);
+
+    // Prefer an existing #stats-btn in the DOM; otherwise use the created one.
     const controlsEl = document.querySelector('.controls');
-    if (controlsEl) {up
-      statsButton.className = 'btn btn-outline-primary';
-      controlsEl.appendChild(statsButton);
+    const existing = document.getElementById('stats-btn');
+    const finalStatsBtn = existing || statsButton;
+    if (!existing) finalStatsBtn.id = 'stats-btn';
+    // normalize classes
+    finalStatsBtn.className = 'btn btn-stats';
+    // attach handler if this is an element that didn't have one
+    if (existing && !existing._hasStatsHandler) {
+      finalStatsBtn.addEventListener('click', openStatsModal);
+      existing._hasStatsHandler = true;
+    }
+
+    if (controlsEl) {
+      const volumeBtn = document.getElementById('sound-btn');
+      if (volumeBtn && volumeBtn.parentNode === controlsEl) {
+        controlsEl.insertBefore(finalStatsBtn, volumeBtn);
+      } else {
+        controlsEl.appendChild(finalStatsBtn);
+      }
     } else {
       const selector = document.getElementById('selector-container');
-      if (selector) selector.appendChild(statsButton);
+      if (selector) selector.appendChild(finalStatsBtn);
     }
   } catch (err) {
     console.error("ui.js: initialization error", err);

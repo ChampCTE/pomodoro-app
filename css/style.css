@@ -243,6 +243,17 @@ button:hover {
   justify-content: center;
 }
 
+/* Stats button styling to ensure visibility */
+.btn-stats {
+  background-color: #1976d2 !important; /* blue */
+  color: #fff !important;
+  border: 1px solid #1565c0 !important;
+}
+.btn-stats:hover {
+  background-color: #155fa0 !important;
+  border-color: #155fa0 !important;
+}
+
 /* Ensure the timer fits nicely inside its column on small screens */
 @media (max-width: 767px) {
   section {
